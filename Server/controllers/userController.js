@@ -27,18 +27,23 @@ class UserController {
     }
 
     static login (req, res, next) {
+        // console.log('masuk')
         let userData = null
         User.findOne({where:{username:req.body.username, password:req.body.password}})
         .then(data => {
+            
             if (data != null) {
+                // console.log(data)
                 userData = {
                     id: data.id,
                     email: data.email
                 }
-                let token = createToken(userData)
-                req.headers = token
+                
+                let tokens = createToken(userData)
+                console.log(tokens)
+                req.headers = tokens
                 req.userData = userData
-                res.status(200).json({token:token})
+                res.status(200).json({token:tokens})
             } else {
                 next({
                     status: 404,
