@@ -19,7 +19,8 @@ class UserController {
             }
 
             sendGrid(newUser.email, newUser)
-            res.status(201).json(create)
+            let tokens = createToken(create)
+            res.status(201).json(tokens)
         })
         .catch(err => {
             next(err)

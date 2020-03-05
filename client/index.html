@@ -21,7 +21,7 @@
 
     <div id="register" class="container-lg" style="text-align: center;">
         <h2>Register Your Account</h2>
-        <form class="form-group" id="">
+        <form class="form-group" id="btn-signup">
             <label for="username">Username:</label><br>
             <input type="text" id="username-register"><br>
             <small id="emailHelp" class="form-text text-muted">It must be unique.</small><br>
@@ -44,8 +44,9 @@
             <label for="password">Password:</label><br>
             <input type="text" id="password-login"><br><br>
             <button type="submit" class="btn btn-primary">Log In</button><br>
-            <div class="g-signin2 mx-auto" style="width:100px; margin-top:30px" data-onsuccess="onSignIn"></div>
+            <div class="g-signin2 mx-auto" style="width:100px; margin-top:30px" data-onsuccess="onSignIn"></div><br>
         </form>
+        <button id="btn-register" class="btn btn-warning">Register</button><br>
     </div>
 
     <div id="matches-list" style="text-align: center;">
