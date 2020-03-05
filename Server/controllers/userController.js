@@ -36,6 +36,7 @@ class UserController {
             if (data != null) {
                 userData = {
                     id: data.id,
+                    username: data.username,
                     email: data.email
                 }
                 let token = createToken(userData)

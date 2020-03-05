@@ -1,5 +1,6 @@
 const router=require('express').Router();
 const userRoute = require(`../routes/userRouter`)
+const commentRoute = require(`../routes/commentRouter`)
 const {test}=require('../helpers/pusher');
 
 
@@ -15,5 +16,7 @@ router.get('/pusher',(req,res)=>{
 })
 
 router.use(`/user`, userRoute)
+
+router.use(`/comment`, commentRoute)
 
 module.exports=router;
