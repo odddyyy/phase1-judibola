@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing pusher</title>
+    <script src="/js/pusher.min.js"></script>
+</head>
+<body>
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('cf1f6fed1fb547b2cfdb', {
+            cluster: 'ap1',
+            forceTLS: true
+        });
+
+        var channel = pusher.subscribe('channel-hehe');
+        channel.bind('event-hehe', function(data) {
+            console.log('data dari event hehe',data);
+        });
+    </script>
+</body>
+</html>
