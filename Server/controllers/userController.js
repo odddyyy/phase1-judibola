@@ -70,7 +70,6 @@ class UserController {
             return User.findOne({where:{email:payload.email}})
         })
         .then(result => {
-            // console.log(result)
             let createUser = {
                 username:payload.name,
                 email:payload.email,
@@ -93,7 +92,6 @@ class UserController {
                     next(err)
                 })
             } else {
-                console.log(result.id)
                 let gotToken = createToken({
                     id:result.id,
                     username:result.username,
