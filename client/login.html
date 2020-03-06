@@ -1,11 +1,30 @@
 <div id="login" class="container-lg" style="text-align: center;">
+    <style>
+        #g-signin{
+            color:white;
+            margin: 20px 40%;
+        }
+    </style>
     <h2>Login</h2>
     <form class="form-group">
         <label for="username">Username:</label><br>
         <input type="text" id="username"><br><br>
         <label for="password">Password:</label><br>
         <input type="text" id="password"><br><br>
-        <button type="submit" class="btn btn-primary">Log In</button>
-        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+        <button type="submit" id="btn-login" class="btn btn-primary">Log In</button>
+        <a id="to-register" href="javascript:void(0)">register</a>
+        <div id="g-signin"></div>
     </form>
+    <script>
+        renderGoogleButton();
+    $('#to-register').click(function(){
+        loadPage('register');
+    });
+    $('#btn-login').on('click', function(event) {
+        let $username = $('#username-login').val()
+        let $password = $('#password-login').val()
+        loadPage('fixture')
+        //loginSuccess()
+    })
+    </script>
 </div>

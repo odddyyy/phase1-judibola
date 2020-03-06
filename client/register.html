@@ -11,6 +11,39 @@
         <input type="text" id="password"><br>
         <small id="emailHelp" class="form-text text-muted">Don't be too easy, but don't be so hard on yourself.</small><br>
         <button type="submit" class="btn btn-primary">Sign Up</button>
+        <a id="to-login" href="javascript:void(0)">login</a>
         <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+        <script>
+            $(window).on('load',function(){
+
+                renderGoogleButton();
+            })
+            $('#to-login').click(function(){
+                loadPage('login');
+            });
+            $('#btn-signup').on('submit', function(event) {
+                event.preventDefault()
+                let $username = $('#username-register').val()
+                let $email = $('#email-register').val()
+                let $password = $('#password-register').val()
+                $.ajax({
+                    method: 'POST',
+                    url: 'http://localhost:3000/user/register',
+                    data: {
+                        username: $username,
+                        email: $email,
+                        password: $password
+                    },
+                    success: (data) => {
+                        localStorage.setItem('token',data)
+                        loginSuccess()
+                    },
+                    error: (err) => {
+                        start()
+                    }
+                })
+                //loginSuccess()
+            })
+        </script>
     </form>
 </div>
