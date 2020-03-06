@@ -116,7 +116,7 @@ class UserController {
     }
 
     static edit (req, res, next) {
-        let userId = req.params.id
+        let userId = req.userData.id
         let updatedUser = {
             username: req.body.username,
         }
@@ -142,7 +142,7 @@ class UserController {
     }
 
     static delete (req, res, next) {
-        let userId = req.params.id
+        let userId = req.userData.id
         User.destroy({where:{id:userId}})
         .then(data => {
             res.status(200).json({msg:`success delete`})
