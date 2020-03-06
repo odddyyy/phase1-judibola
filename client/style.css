@@ -5,3 +5,35 @@
 body{
     background-color: black;
 }
+
+.logo-img{
+    width: 100px;
+    height: 100px;
+}
+
+.vs{
+    font-size: 50px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.bet-content{
+    margin:50px auto;
+    border-top: 1px solid white;
+    padding-top:20px;
+}
+
+.btn-bet{
+    width: 200px;
+    height: 100px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.footer{
+    text-align: center;
+     bottom: 0; 
+     width: 100%;
+}

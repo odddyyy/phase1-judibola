@@ -5,18 +5,25 @@
         fixture:'/fixture'
     }
     const viewsCache={};
+    
 
     var token=localStorage.getItem('token');
     var $app=$('#app');
+    var currPage='';
+
+    function renderPage(page){
+        $app.html(viewsCache[page]);
+        currPage='login';
+    }
 
     window.loadPage=function(page){
         if(viewsCache[page]){
-            $app.html(viewsCache[page])
+           renderPage(page);
         }
         else{
             $.get('/'+page+'.html').done(function(html){
-                $app.html(html);
                 viewsCache[page]=html;
+                renderPage(page);
             }).fail(function(){
                 alert('Ada error');
             })
@@ -34,6 +41,8 @@
     }
 
     window.renderGoogleButton=function(){
+        if(currPage!=='login')
+            return;
         gapi.signin2.render('g-signin', {
             'scope': 'profile email',
             'width': 240,
