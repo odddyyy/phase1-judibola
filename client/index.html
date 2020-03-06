@@ -16,7 +16,7 @@
     <div style="text-align: center;">
         <h2>Hacktiv-Bet</h2>
         <h6>The Best Betting Place</h6>
-            <div style="position: absolute; right: 15px; top:25px">
+            <div style="position: absolute; right: 15px; top:25px" id="btn-signout">
                 <a href="#" onclick="signOut();">Sign out</a>
             </div>
             <div style="position: absolute; left: 15px; top:22px">
@@ -73,9 +73,11 @@
             <label for="username">Username:</label><br>
             <input type="text" id="username-edit"><br>
             <small id="emailHelp" class="form-text text-muted">Filled with your new username.</small><br>
-            <button type="submit" class="btn btn-primary">Edit</button><br>
-            <button class="btn btn-danger" id="btn-delete">Delete</button><br>
+            <button type="submit" class="btn btn-primary">Edit</button>
         </form>
+        <br>
+        <button class="btn btn-warning" id="btn-delete" onclick="start()">Cancel</button><br><br>
+        <button class="btn btn-danger" id="btn-delete">Delete</button>
     </div>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
