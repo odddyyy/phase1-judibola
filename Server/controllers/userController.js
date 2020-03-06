@@ -115,6 +115,33 @@ class UserController {
         })
     }
 
+    static edit (req, res, next) {
+        let userId = req.params.id
+        let updatedUser = {
+            username: req.body.username,
+        }
+        User.update(updatedUser, {where:{id:userId}})
+        .then(data => {
+            if (data[0] != 0) {
+                res.status(201).json(updatedUser)
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static delete (req, res, next) {
+        let userId = req.params.id
+        User.destroy({where:{id:userId}})
+        .then(data => {
+            res.status(200).json({msg:`success delete data`})
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
 }
 
 module.exports = UserController
