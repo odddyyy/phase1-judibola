@@ -32,9 +32,10 @@ class UserController {
 
     static login (req, res, next) {
         let userData = null
+        // console.log(req.body)
         User.findOne({where:{username:req.body.username, password:req.body.password}})
         .then(data => {
-            
+            console.log(`masuk`)
             if (data != null) {
                 userData = {
                     id: data.id,
