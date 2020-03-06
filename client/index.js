@@ -1,25 +1,73 @@
-function start() {
-    let token = localStorage.getItem('token')
-
+$(document).ready(()=> {
+    // console.log('jalanin first')
+     var token = localStorage.getItem('token')
     if (token) {
-        $(document).ready(() => {
+        startTrue()
+        // $(document).ready(() => {
+            // getMatch()
+            // $('#edit-user').show()
+            // $('#register').hide()
+            // $('#forum-betting').hide()
+            // $('#login').hide()
+            // $('#edit-form').hide()
+            // $('#matches-list').show()
+            // $('#btn-signout').show()
+        // })
+    } else {
+        startFalse()
+        // $('#btn-signout').hide()
+        // $('#edit-user').hide()
+        // $('#register').hide()
+        // $('#matches-list').hide()
+        // $('#forum-betting').hide()
+        // $('#edit-form').hide()
+        // $('#login').show()
+    }
+})
+
+function startTrue() {
+    getMatch()
             $('#edit-user').show()
             $('#register').hide()
             $('#forum-betting').hide()
             $('#login').hide()
             $('#edit-form').hide()
             $('#matches-list').show()
-        })
-    } else {
-        $('#btn-signout').hide()
+            $('#btn-signout').show()
+}
+
+function startFalse() {
+    $('#btn-signout').hide()
         $('#edit-user').hide()
         $('#register').hide()
         $('#matches-list').hide()
         $('#forum-betting').hide()
         $('#edit-form').hide()
         $('#login').show()
-    }
 }
+// function start() {
+//     // let token = localStorage.getItem('token')
+//     // console.log(token)
+//     if (token) {
+//         // $(document).ready(() => {
+//             getMatch()
+//             $('#edit-user').show()
+//             $('#register').hide()
+//             $('#forum-betting').hide()
+//             $('#login').hide()
+//             $('#edit-form').hide()
+//             $('#matches-list').show()
+//         // })
+//     } else {
+//         $('#btn-signout').hide
+//         $('#edit-user').hide()
+//         $('#register').hide()
+//         $('#matches-list').hide()
+//         $('#forum-betting').hide()
+//         $('#edit-form').hide()
+//         $('#login').show()
+//     }
+// }
 
 function registerSuccess() {
     $('#register').hide()
@@ -34,7 +82,14 @@ function loginSuccess() {
     $('#forum-betting').hide()
     $('#login').hide()
     $('#edit-form').hide()
+    $('#edit-user').show()
     $('#matches-list').show()
+    $('#btn-signout').show()
+    getMatch()
+    
+}
+
+function getMatch () {
     $.ajax({
         headers: { 'X-Auth-Token': '2802184ee02149db8db662c465d15214' },
         url: `http://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED`,
@@ -79,8 +134,9 @@ $('#btn-signup').on('submit', function(event) {
             localStorage.setItem('token',data)
             loginSuccess()
         },
-        error: (err) => {
-            start()
+        error: (response) => {
+            $('#err-register').text(response.responseJSON)
+            startFalse()
         }
     })
     loginSuccess()
@@ -98,15 +154,18 @@ $('#btn-login').on('submit', function(event) {
             password: $password
         },
         success: (data) => {
+            console.log(`sukses login`)
             localStorage.setItem('token', data.token)
             loginSuccess()
         },
-        error: (err) => {
-            start()
-            console.log(err)
+        error: (response) => {
+            // start()
+            $('#error-text').text(response.responseJSON.msg)
+            // console.log(`masuk error`)
+            // console.log()
         }
     })
-    loginSuccess()
+    // loginSuccess()
 })
 
 $('#edit-user').on('click', function(){
@@ -131,7 +190,8 @@ $('#btn-edit').on('submit', function(event){
         },
         success : () =>{
             console.log('update success')
-            start()
+            // start()
+            startTrue()
         }
     })
 })
@@ -147,7 +207,7 @@ $('#btn-delete').on('click', function(event){
         success : () =>{
             console.log('delete success')
             signOut()
-            start()
+            // start()
         }
     })
 })
@@ -165,8 +225,8 @@ function onSignIn(googleUser) {
             $('#edit-user').show()
             loginSuccess()
         },
-        error : (err)=>{
-            console.log('update failed')
+        error : (response)=>{
+            console.log(response.responseJSON)
         }
     })
 }
@@ -177,7 +237,8 @@ function signOut() {
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
-    start()
+    startFalse()
+    // start()
   }
 
-start()
+// start()

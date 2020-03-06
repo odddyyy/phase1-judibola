@@ -27,6 +27,7 @@
 
     <div id="register" class="container-lg" style="text-align: center;">
         <h2>Register Your Account</h2>
+        <span id="err-register"></span>
         <form class="form-group" id="btn-signup">
             <label for="username">Username:</label><br>
             <input type="text" id="username-register"><br>
@@ -45,6 +46,7 @@
 
     <div id="login" class="container-lg" style="text-align: center;">
         <h2>Login</h2>
+        <span id="error-text" style="color: red;"></span>
         <form class="form-group" id="btn-login">
             <label for="username">Username:</label><br>
             <input type="text" id="username-login"><br><br>
@@ -76,7 +78,7 @@
             <button type="submit" class="btn btn-primary">Edit</button>
         </form>
         <br>
-        <button class="btn btn-warning" id="btn-delete" onclick="start()">Cancel</button><br><br>
+        <button class="btn btn-warning" id="btn-cancel" onclick="startTrue()">Cancel</button><br><br>
         <button class="btn btn-danger" id="btn-delete">Delete</button>
     </div>
 
