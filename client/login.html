@@ -16,7 +16,11 @@
         <div id="g-signin"></div>
     </form>
     <script>
-    renderGoogleButton();
+    try{
+        renderGoogleButton();
+    }catch(err){
+        console.log(err,'Ada error di google');
+    }
     initNavbar(false);
     $('#to-register').click(function(){
         loadPage('register');

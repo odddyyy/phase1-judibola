@@ -1,16 +1,19 @@
 function start() {
     let token = localStorage.getItem('token')
+
     if (token) {
         $(document).ready(() => {
             $('#register').hide()
             $('#forum-betting').hide()
             $('#login').hide()
+            $('#edit-form').hide()
             $('#matches-list').show()
         })
     } else {
         $('#register').hide()
         $('#matches-list').hide()
         $('#forum-betting').hide()
+        $('#edit-form').hide()
         $('#login').show()
     }
 }
@@ -19,6 +22,7 @@ function registerSuccess() {
     $('#register').hide()
     $('#forum-betting').hide()
     $('#matches-list').hide()
+    $('#edit-form').hide()
     $('#login').show()
 }
 
@@ -26,13 +30,32 @@ function loginSuccess() {
     $('#register').hide()
     $('#forum-betting').hide()
     $('#login').hide()
+    $('#edit-form').hide()
     $('#matches-list').show()
+    // $.ajax({
+    //     headers: { 'X-Auth-Token': '2802184ee02149db8db662c465d15214' },
+    //     url: `http://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED`,
+    //     dataType: `json`,
+    //     type: `GET`,
+    //   }).done(function(response) {
+    //     $('#table-list').empty()
+    //     for (let i = 0 ; i < 10 ; i++) {
+    //         let x = response.matches[i].utcDate.split(`T`)
+    //         x.pop()
+    //         $('#table-list').append(`
+    //         <tr>    
+    //         <td>${response.matches[i].homeTeam.name} vs ${response.matches[i].awayTeam.name} on ${x} </td>
+    //         </tr>
+    //         `)
+    //     }
+    //   });
 }
 
 $('#btn-register').on('click', function(){
     $('#forum-betting').hide()
     $('#login').hide()
     $('#matches-list').hide()
+    $('#edit-form').hide()
     $('#register').show()
 })  
 
@@ -82,5 +105,75 @@ $('#btn-login').on('submit', function(event) {
     })
     loginSuccess()
 })
+
+$('#edit-user').on('click', function(){
+    $('#forum-betting').hide()
+    $('#login').hide()
+    $('#matches-list').hide()
+    $('#register').hide()
+    $('#edit-form').show()
+})
+
+$('#btn-edit').on('submit', function(event){
+    event.preventDefault()
+    let $username = $('#username-edit').val()
+    $.ajax({
+        method : 'PUT',
+        url : 'http://localhost:3000/user/edit',
+        headers : {
+            token : localStorage.getItem('token')
+        },
+        data:{
+            username : $username
+        },
+        success : () =>{
+            console.log('update success')
+            start()
+        }
+    })
+})
+
+$('#btn-delete').on('click', function(event){
+    event.preventDefault()
+    $.ajax({
+        method : 'DELETE',
+        url : 'http://localhost:3000/user/delete',
+        headers : {
+            token : localStorage.getItem('token')
+        },
+        success : () =>{
+            console.log('delete success')
+            signOut()
+            start()
+        }
+    })
+})
+
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/user/googleSign',
+        data: {
+            token : id_token
+        },
+        success : (token)=>{
+            localStorage.setItem('token', token)
+            loginSuccess()
+        },
+        error : (err)=>{
+            console.log('update failed')
+        }
+    })
+}
+
+function signOut() {
+    localStorage.removeItem('token')
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+    start()
+  }
 
 start()
