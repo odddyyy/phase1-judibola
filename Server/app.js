@@ -13,8 +13,8 @@ module.exports=(PORT)=>{
     app.use(express.urlencoded({extended:true}));
     app.use(cors());
 
-    app.use('/',require('./routes/index'));
-    app.use(`/`, errorHandler)
+    app.use(require('./routes/index'));
+    app.use(errorHandler)
 
     app.listen(PORT,()=>console.log('Server jalan di port '+PORT))
 }

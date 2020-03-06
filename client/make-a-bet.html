@@ -6,24 +6,10 @@
         </div>
     </div>
     <div class="row bet-content">
-        <div class="col-sm-8 text-center">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h1>Mancherster United</h1>
-                    <h2 class="t-margin">Home Team</h2>
-                </div>
-                <div class="col-sm-4">
-                    <h1 class="vs">VS</h1>
-                    <h3>Scheduled at: 20 March 2020 20:00:00</h3>
-                </div>
-                <div class="col-sm-4">
-                    <h1>Mancherster United</h1>
-                    <h2 class="t-margin">Away Team</h2>
-                </div>
-            </div>
+        <div class="col-sm-8 text-center" id="view-home">
         </div>
         <div class="col-sm-1"></div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="form-group">
                 <label for="bet">Define Your Bet</label>
                 <input type="text" class="form-control" id="bet-num">
@@ -31,4 +17,41 @@
             </div>
         </div>
     </div>
+    <template id="t-template">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h1>{home_name}</h1>
+                    <h2 class="t-margin">Home Team</h2>
+                </div>
+                <div class="col-sm-4">
+                    <h1 class="vs">VS</h1>
+                    <h3>Scheduled at: {schedule}</h3>
+                </div>
+                <div class="col-sm-4">
+                    <h1>{away_name}</h1>
+                    <h2 class="t-margin">Away Team</h2>
+                </div>
+            </div>
+      
+    </template>
 </div>
+<script>
+    (function(){
+        var $dTemplate=$('#t-template');
+        var $viewHome=$('#view-home');
+
+        var newT=$dTemplate.html();
+        var dateObj=new Date(currentBet.utcDate);
+        var dStr=dateObj.toDateString();
+
+        var convertT=newT
+        .replace('{home_name}',currentBet.homeTeam.name)
+        .replace('{away_name}',currentBet.awayTeam.name)
+        .replace('{schedule}',dStr);
+
+        $viewHome.html(convertT);
+    })();
+    
+
+
+</script>
