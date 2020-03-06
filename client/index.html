@@ -16,6 +16,12 @@
     <div style="text-align: center;">
         <h2>Hacktiv-Bet</h2>
         <h6>The Best Betting Place</h6>
+            <div style="position: absolute; right: 15px; top:25px">
+                <a href="#" onclick="signOut();">Sign out</a>
+            </div>
+            <div style="position: absolute; left: 15px; top:22px">
+                <button id="edit-user" class="btn btn-warning">Edit User</button>
+            </div>
         <hr color="white">
     </div>
 
@@ -50,17 +56,25 @@
         <button id="btn-register" class="btn btn-warning">Register</button><br>
     </div>
 
-    <div id="matches-list" style="text-align: center;">
-        <a href="#" onclick="signOut();">Sign out</a>
+    <div id="matches-list" style="text-align: center;" class="container">
         <h2>This Week Premier League Upcoming Fixtures</h2>
         <table id="table-list" class="table">
 
         </table><br>
-        <button class="btn btn-warning">Choose Home Tim</button>-------<button class="btn btn-success">Choose Away Tim</button>
     </div>
 
     <div id="forum-betting" style="text-align: center;">
         <h2>Forum Betting</h2>
+    </div>
+
+    <div id="edit-form" style="text-align: center;">
+        <h4>Edit Your Username</h4>
+        <form id="btn-edit">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username-edit"><br>
+            <small id="emailHelp" class="form-text text-muted">Filled with your new username.</small><br>
+            <button type="submit" class="btn btn-primary">Edit</button><br>
+        </form>
     </div>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
