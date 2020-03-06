@@ -5,40 +5,28 @@
             <button class="btn btn-success btn-bet-heading" onclick="loadPage('bet-room')">Bet Room</button>
         </div>
     </div>
-    <div class="row bet-content">
-        <div class="col-sm-4">
-            <h1>Mancherster United</h1>
-            <img src="/img/mu.png" class="logo-img" alt="mu">
-            <h2>Home Team</h2>
-        </div>
-        <div class="col-sm-4">
-            <h1 class="vs">VS</h1>
-            <h3>Scheduled at: 20 March 2020 20:00:00</h3>
-            <button class="btn btn-primary btn-bet" onclick="loadPage('make-a-bet')">Start Bet</button>
-        </div>
-        <div class="col-sm-4">
-            <h1>Mancherster United</h1>
-            <img src="/img/mu.png" class="logo-img" alt="mu">
-            <h2>Away Team</h2>
-        </div>
+    <div class="row">
+        <table id="table-list" class="table">
+
+        </table><br>
     </div>
-    <hr>
-    <div class="row bet-content">
-        <div class="col-sm-4">
-            <h1>Mancherster United</h1>
-            <img src="/img/mu.png" class="logo-img" alt="mu">
-            <h2>Home Team</h2>
-        </div>
-        <div class="col-sm-4">
-            <h1 class="vs">VS</h1>
-            <h3>Scheduled at: 20 March 2020 20:00:00</h3>
-            <button class="btn btn-primary btn-bet">Start Bet</button>
-        </div>
-        <div class="col-sm-4">
-            <h1>Mancherster United</h1>
-            <img src="/img/mu.png" class="logo-img" alt="mu">
-            <h2>Away Team</h2>
-        </div>
-       
-    </div>
+    <script>
+    $.ajax({
+        headers: { 'X-Auth-Token': '2802184ee02149db8db662c465d15214' },
+        url: `http://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED`,
+        dataType: `json`,
+        type: `GET`,
+      }).done(function(response) {
+        $('#table-list').empty()
+        for (let i = 0 ; i < 10 ; i++) {
+            let x = response.matches[i].utcDate.split(`T`)
+            x.pop()
+            $('#table-list').append(`
+            <tr>    
+            <td><a href="javascript:void(0);" onclick="loadPage('make-a-bet')">${response.matches[i].homeTeam.name} vs ${response.matches[i].awayTeam.name} on ${x}</a> </td>
+            </tr>
+            `)
+        }
+      });
+    </script>
 </div>
