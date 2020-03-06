@@ -32,10 +32,11 @@ class UserController {
 
     static login (req, res, next) {
         let userData = null
-        // console.log(req.body)
+        console.log(req.body)
         User.findOne({where:{username:req.body.username, password:req.body.password}})
         .then(data => {
-            console.log(`masuk`)
+            // console.log(`masuk`)
+            // console.log(data)
             if (data != null) {
                 userData = {
                     id: data.id,
@@ -49,7 +50,7 @@ class UserController {
                 res.status(200).json({token:tokens})
             } else {
                 next({
-                    status: 404,
+                    status: 400,
                     msg: `invalid username / password`
                 })
             }
