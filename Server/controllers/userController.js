@@ -70,7 +70,6 @@ class UserController {
             return User.findOne({where:{email:payload.email}})
         })
         .then(result => {
-            // console.log(result)
             let createUser = {
                 username:payload.name,
                 email:payload.email,
@@ -93,7 +92,6 @@ class UserController {
                     next(err)
                 })
             } else {
-                console.log(result.id)
                 let gotToken = createToken({
                     id:result.id,
                     username:result.username,
@@ -111,6 +109,43 @@ class UserController {
         })
         .catch(err => {
             console.log(err)
+            next(err)
+        })
+    }
+
+    static edit (req, res, next) {
+        let userId = req.userData.id
+        let updatedUser = {
+            username: req.body.username,
+        }
+        User.findByPk(userId)
+        .then(data => {
+            if (data == null) {
+                next({
+                    status:404,
+                    msg:`cannot be found`
+                })
+            } else {
+                return User.update(updatedUser, {where:{id:userId}})
+            }
+        })
+        .then(data => {
+            if (data[0] != 0) {
+                res.status(201).json(updatedUser)
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static delete (req, res, next) {
+        let userId = req.userData.id
+        User.destroy({where:{id:userId}})
+        .then(data => {
+            res.status(200).json({msg:`success delete`})
+        })
+        .catch(err => {
             next(err)
         })
     }
