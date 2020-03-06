@@ -53,6 +53,7 @@
         $viewHome.html(convertT);
 
         $makeBetBtn.click(function(){
+            debugger;
             var data={
                 "home_name":currentBet.homeTeam.name,
                 "away_name":currentBet.awayTeam.name,
@@ -62,7 +63,7 @@
             }
             var headers={
                 'Content-Type':'application/json',
-                'token':'[TOKEN]'
+                'token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJoaXRzYW1fdGlhbW1hciIsImVtYWlsIjoiaGVoZUBnbWFpbC5jb20iLCJpYXQiOjE1ODM0ODI1NjZ9.ejjWfqvEMatiAWYEwQhfo1W7ANlCVq1YzOaNEbwxHvA'
             }
 
             var url='http://localhost:3000/bet';

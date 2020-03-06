@@ -10,24 +10,57 @@
             <h1 class="text-left" style="margin-bottom: 30px;">Select Room you want to join</h1>
             <table class="table">
                 <thead>
-                    <th>Room Owner</th>
                     <th>Home</th>
                     <th>Away</th>
                     <th>Schedule</th>
-                    <th>Action</th>
+                    <th>Num Bet</th>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Fauzan Akbar</td>
-                        <td>Manchester United</td>
-                        <td>Manchester United</td>
-                        <td>4 March 2020 20:10:10</td>
-                        <td>
-                            <button class="btn btn-primary" onclick="loadPage('bet-room-client')">Join Room</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="bet-room-tbody"></tbody>
             </table>
         </div>
     </div>
+    <template id="bet-room-content">
+        <tr>
+            <td>{home_team}</td>
+            <td>{away_team}</td>
+            <td>{schedule}</td>
+            <td>{num_bet}</td>
+        </tr>
+    </template>
 </div>
+<script>
+    (function(){
+        var $betRoomContent=$('#bet-room-content');
+        var $betRoomTBody=$('#bet-room-tbody');
+
+        var trTemplate=$betRoomContent.html();
+
+        var pusher = new Pusher('cf1f6fed1fb547b2cfdb', {
+            cluster: 'ap1',
+            forceTLS: true
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            console.log({data});
+            var new_tr_template=trTemplate
+            .replace('{home_team}',d.homeTeam.name)
+            .replace('{away_team}',d.awayTeam.name)
+            .replace('{schedule}',d.utcDate)
+            .replace('{num_bet}',Math.floor(Math.random()*100000))
+            $betRoomTBody.append(new_tr_template);
+        });
+
+        for(var i=0;i<resData.length;i++){
+            var d=resData[i];
+            var new_tr_template=trTemplate
+            .replace('{home_team}',d.homeTeam.name)
+            .replace('{away_team}',d.awayTeam.name)
+            .replace('{schedule}',d.utcDate)
+            $betRoomTBody.append(new_tr_template);
+        }
+
+
+
+    })()
+</script>
