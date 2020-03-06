@@ -16,15 +16,17 @@
         <div id="g-signin"></div>
     </form>
     <script>
-    renderGoogleButton()
+    renderGoogleButton();
+    initNavbar(false);
     $('#to-register').click(function(){
         loadPage('register');
     });
     $('#btn-login').on('click', function(event) {
         let $username = $('#username-login').val()
         let $password = $('#password-login').val()
+        initNavbar(true);
         loadPage('fixture')
-        //loginSuccess()
+
     })
     </script>
 </div>
