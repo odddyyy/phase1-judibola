@@ -1,6 +1,6 @@
 function start() {
     let token = localStorage.getItem('token')
-    
+
     if (token) {
         $(document).ready(() => {
             $('#register').hide()
@@ -112,20 +112,41 @@ $('#edit-user').on('click', function(){
     $('#matches-list').hide()
     $('#register').hide()
     $('#edit-form').show()
-    // $.ajax({
-    //     method : 'GET',
-
-    //     success
-    //     edit()
-    // })
 })
 
-function edit(id){
+$('#btn-edit').on('submit', function(event){
+    event.preventDefault()
+    let $username = $('#username-edit').val()
+    $.ajax({
+        method : 'PUT',
+        url : 'http://localhost:3000/user/edit',
+        headers : {
+            token : localStorage.getItem('token')
+        },
+        data:{
+            username : $username
+        },
+        success : () =>{
+            console.log('update success')
+            start()
+        }
+    })
+})
 
-}
-
-$('#btn-edit').on('submit', function(){
-
+$('#btn-delete').on('click', function(event){
+    event.preventDefault()
+    $.ajax({
+        method : 'DELETE',
+        url : 'http://localhost:3000/user/delete',
+        headers : {
+            token : localStorage.getItem('token')
+        },
+        success : () =>{
+            console.log('delete success')
+            signOut()
+            start()
+        }
+    })
 })
 
 function onSignIn(googleUser) {
@@ -139,6 +160,9 @@ function onSignIn(googleUser) {
         success : (token)=>{
             localStorage.setItem('token', token)
             loginSuccess()
+        },
+        error : (err)=>{
+            console.log('update failed')
         }
     })
 }
