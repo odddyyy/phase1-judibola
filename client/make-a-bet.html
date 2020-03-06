@@ -13,7 +13,7 @@
             <div class="form-group">
                 <label for="bet">Define Your Bet</label>
                 <input type="text" class="form-control" id="bet-num">
-                <button class="btn btn-danger" style="margin-top:10px;">Make Bet</button>
+                <button class="btn btn-danger" id="make-bet-btn" style="margin-top:10px;">Make Bet</button>
             </div>
         </div>
     </div>
@@ -39,6 +39,7 @@
     (function(){
         var $dTemplate=$('#t-template');
         var $viewHome=$('#view-home');
+        var $makeBetBtn=$('#make-bet-btn');
 
         var newT=$dTemplate.html();
         var dateObj=new Date(currentBet.utcDate);
@@ -50,6 +51,35 @@
         .replace('{schedule}',dStr);
 
         $viewHome.html(convertT);
+
+        $makeBetBtn.click(function(){
+            var data={
+                "home_name":currentBet.homeTeam.name,
+                "away_name":currentBet.awayTeam.name,
+                "real_id":currentBet.id,
+                "schedule":currentBet.utcDate,
+                "winner":null
+            }
+            var headers={
+                'Content-Type':'application/json',
+                'token':'[TOKEN]'
+            }
+
+            var url='http://localhost:3000/bet';
+            $.ajax({
+                method:'POST',
+                url:url,
+                data:data,
+                headers:headers
+            }).done(function(){
+                alert('Berhasil menaruh taruhan')
+            })
+            .fail(function(){
+                alert('Gagal menaruh taruhan');
+            })
+
+        })
+
     })();
     
 
