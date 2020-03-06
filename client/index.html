@@ -32,7 +32,8 @@
             <input type="text" id="password-register"><br>
             <small id="emailHelp" class="form-text text-muted">Don't be too easy, but don't be so hard on yourself.</small><br>
             <button type="submit" class="btn btn-primary">Sign Up</button>
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <div class="g-signin2 mx-auto" style="width:100px; margin-top:30px" data-onsuccess="onSignIn"></div><br>
+
         </form>
     </div>
 
@@ -50,14 +51,12 @@
     </div>
 
     <div id="matches-list" style="text-align: center;">
+        <a href="#" onclick="signOut();">Sign out</a>
         <h2>This Week Premier League Upcoming Fixtures</h2>
-        <p>zzz</p>
+        <table id="table-list" class="table">
+
+        </table><br>
         <button class="btn btn-warning">Choose Home Tim</button>-------<button class="btn btn-success">Choose Away Tim</button>
-        <p>zzz</p>
-        <p>zzz</p>
-        <p>zzz</p>
-        <p>zzz</p>
-        <p>zzz</p>
     </div>
 
     <div id="forum-betting" style="text-align: center;">

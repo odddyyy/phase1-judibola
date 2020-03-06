@@ -31,13 +31,11 @@ class UserController {
     }
 
     static login (req, res, next) {
-        // console.log('masuk')
         let userData = null
         User.findOne({where:{username:req.body.username, password:req.body.password}})
         .then(data => {
             
             if (data != null) {
-                // console.log(data)
                 userData = {
                     id: data.id,
                     username: data.username,
@@ -45,7 +43,6 @@ class UserController {
                 }
                 
                 let tokens = createToken(userData)
-                console.log(tokens)
                 req.headers = tokens
                 req.userData = userData
                 res.status(200).json({token:tokens})
@@ -72,15 +69,14 @@ class UserController {
             payload = data.getPayload()
             return User.findOne({where:{email:payload.email}})
         })
-        .then(data => {
+        .then(result => {
+            // console.log(result)
             let createUser = {
-                id:data.id,
-                username:data.username,
-                email:data.email,
+                username:payload.name,
+                email:payload.email,
                 password:`rahasiaPribadiSaya`
             }
-
-            if (data == null) {
+            if (result == null) {
                 User.create(createUser)
                 .then(data => {
                     let user = {
@@ -90,13 +86,18 @@ class UserController {
                     }
 
                     let tokenServer = createToken(user)
-                    res.status(200).json(token)
+                    res.status(200).json(tokenServer)
+                })
+                .catch(err => {
+                    
+                    next(err)
                 })
             } else {
+                console.log(result.id)
                 let gotToken = createToken({
-                    id:data.id,
-                    username:data.username,
-                    email:data.email
+                    id:result.id,
+                    username:result.username,
+                    email:result.email
                 })
 
                 req.headers = gotToken
@@ -109,11 +110,11 @@ class UserController {
             }
         })
         .catch(err => {
+            console.log(err)
             next(err)
         })
     }
 
 }
-
 
 module.exports = UserController

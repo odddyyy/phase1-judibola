@@ -27,6 +27,23 @@ function loginSuccess() {
     $('#forum-betting').hide()
     $('#login').hide()
     $('#matches-list').show()
+    $.ajax({
+        headers: { 'X-Auth-Token': '2802184ee02149db8db662c465d15214' },
+        url: `http://api.football-data.org/v2/competitions/PL/matches?status=SCHEDULED`,
+        dataType: `json`,
+        type: `GET`,
+      }).done(function(response) {
+        $('#table-list').empty()
+        for (let i = 0 ; i < 10 ; i++) {
+            let x = response.matches[i].utcDate.split(`T`)
+            x.pop()
+            $('#table-list').append(`
+            <tr>    
+            <td>${response.matches[i].homeTeam.name} vs ${response.matches[i].awayTeam.name} on ${x} </td>
+            </tr>
+            `)
+        }
+      });
 }
 
 $('#btn-register').on('click', function(){
@@ -82,5 +99,29 @@ $('#btn-login').on('submit', function(event) {
     })
     loginSuccess()
 })
+
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/user/googleSign',
+        data: {
+            token : id_token
+        },
+        success : (token)=>{
+            localStorage.setItem('token', token)
+            loginSuccess()
+        }
+    })
+}
+
+function signOut() {
+    localStorage.removeItem('token')
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+    start()
+  }
 
 start()
