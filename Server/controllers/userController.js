@@ -120,7 +120,17 @@ class UserController {
         let updatedUser = {
             username: req.body.username,
         }
-        User.update(updatedUser, {where:{id:userId}})
+        User.findByPk(userId)
+        .then(data => {
+            if (data == null) {
+                next({
+                    status:404,
+                    msg:`cannot be found`
+                })
+            } else {
+                return User.update(updatedUser, {where:{id:userId}})
+            }
+        })
         .then(data => {
             if (data[0] != 0) {
                 res.status(201).json(updatedUser)
@@ -135,7 +145,7 @@ class UserController {
         let userId = req.params.id
         User.destroy({where:{id:userId}})
         .then(data => {
-            res.status(200).json({msg:`success delete data`})
+            res.status(200).json({msg:`success delete`})
         })
         .catch(err => {
             next(err)
